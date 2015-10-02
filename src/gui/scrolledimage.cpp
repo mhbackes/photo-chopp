@@ -7,7 +7,7 @@
 
 #include "scrolledimage.h"
 
-const guint gui::ScrolledImage::BORDER_WIDTH = 5;
+const guint gui::ScrolledImage::BORDER_WIDTH = 0;
 
 gui::ScrolledImage::ScrolledImage() {
 	set_border_width(BORDER_WIDTH);
@@ -17,9 +17,8 @@ gui::ScrolledImage::ScrolledImage() {
 }
 
 gui::ScrolledImage::~ScrolledImage() {
-	// TODO Auto-generated destructor stub
 }
 
 Gtk::Image& gui::ScrolledImage::getImage() {
-	return  image_;
+	return image_;
 }

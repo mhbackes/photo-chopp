@@ -26,6 +26,7 @@ private:
 	Menu menu_;
 
 	static const guint BORDER_WIDTH;
+	
 };
 
 } /* namespace gui */

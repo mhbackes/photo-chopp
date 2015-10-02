@@ -34,7 +34,6 @@ gui::Menu::Menu(ImageSpace& imageSpace) :
 }
 
 gui::Menu::~Menu() {
-	// TODO Auto-generated destructor stub
 }
 
 void gui::Menu::onOpenClicked() {
@@ -49,7 +48,7 @@ void gui::Menu::onOpenClicked() {
 }
 
 void gui::Menu::onSaveClicked() {
-	if(imageSpace_.getCurrentImage().get_storage_type() ==  Gtk::IMAGE_EMPTY)
+	if (imageSpace_.getCurrentImage().get_storage_type() == Gtk::IMAGE_EMPTY)
 		return;
 	Gtk::FileChooserDialog dialog("Open File", Gtk::FILE_CHOOSER_ACTION_SAVE);
 	dialog.add_button("Cancel", Gtk::RESPONSE_CANCEL);

@@ -7,9 +7,9 @@
 
 #include "mainwindow.h"
 
-const guint graphicUserInterface::MainWindow::BORDER_WIDTH = 5;
+const guint gui::MainWindow::BORDER_WIDTH = 0;
 
-graphicUserInterface::MainWindow::MainWindow() :
+gui::MainWindow::MainWindow() :
 		workspace_(), menu_(workspace_.getImageSpace()) {
 	maximize();
 	set_border_width(BORDER_WIDTH);
@@ -20,7 +20,6 @@ graphicUserInterface::MainWindow::MainWindow() :
 	show_all_children();
 }
 
-graphicUserInterface::MainWindow::~MainWindow() {
-	// TODO Auto-generated destructor stub
+gui::MainWindow::~MainWindow() {
 }
 

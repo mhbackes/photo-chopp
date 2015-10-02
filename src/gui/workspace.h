@@ -8,8 +8,6 @@
 #ifndef PHOTO_CHOPPE_SRC_GUI_WORKSPACE_H_
 #define PHOTO_CHOPPE_SRC_GUI_WORKSPACE_H_
 
-#include <gtkmm/paned.h>
-
 #include "imagespace.h"
 #include "toolbox.h"
 

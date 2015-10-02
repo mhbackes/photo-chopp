@@ -16,14 +16,13 @@ img::PixMat::PixMat(Glib::RefPtr<Gdk::Pixbuf> pixbuf) {
 }
 
 img::PixMat::~PixMat() {
-	// TODO Auto-generated destructor stub
 }
 
-img::Pixel img::PixMat::operator [](int n) {
+img::Pixel img::PixMat::operator [](int n) const {
 	return Pixel(pixels_ + n * n_channels_);
 }
 
-img::Pixel img::PixMat::at(int x, int y) {
+img::Pixel img::PixMat::at(int x, int y) const {
 	return Pixel(pixels_ + y * rowstride_ + x * n_channels_);
 }
 
@@ -47,23 +46,23 @@ int img::PixMat::rowstride() const {
 	return rowstride_;
 }
 
-guint image::PixMat::size() const {
+guint img::PixMat::size() const {
 	return width_ * height_;
 }
 
 void img::PixMat::linearTransformation(double a, double b) {
 	for (guint i = 0; i < size(); i++) {
-		operator[](i).grayScale();
+		operator[](i).linearTransformation(a, b);
 	}
 }
 
-void image::PixMat::grayScale() {
+void img::PixMat::grayScale() {
 	for (guint i = 0; i < size(); i++) {
 		operator[](i).grayScale();
 	}
 }
 
-void image::PixMat::horizontalFlip() {
+void img::PixMat::horizontalFlip() {
 	int lastCol = width_ - 1;
 	int halfWidth = width_ / 2;
 	guint8 tempPixel[Pixel::SIZE_BYTES];
@@ -79,7 +78,7 @@ void image::PixMat::horizontalFlip() {
 	}
 }
 
-void image::PixMat::verticalFlip() {
+void img::PixMat::verticalFlip() {
 	int lastRow = height_ - 1;
 	guint8* temp = new guint8[rowstride_];
 	for (int i = 0; i < height_ / 2; i++) {
@@ -92,17 +91,41 @@ void image::PixMat::verticalFlip() {
 	delete[] temp;
 }
 
-void image::PixMat::grayQuantization(int numShades) {
+void img::PixMat::grayQuantization(int numShades) {
 	for (guint i = 0; i < size(); i++) {
 		operator[](i).grayQuantization(numShades);
 	}
 }
 
-std::vector<int> image::PixMat::grayFrequences() {
-	grayScale();
-	std::vector<int> freq(256);
-	for (guint i = 0; i < size(); i++) {
-		freq[operator[](i).R]++;
+void img::PixMat::histogram(std::vector<int>& result) const {
+	result.resize(Pixel::NUM_COLOR);
+	for (std::size_t i = 0; i < size(); i++) {
+		const Pixel p = operator[](i);
+		result[p.luminance()]++;
 	}
-	return freq;
+}
+
+void img::PixMat::cumulativeHistogram(std::vector<int>& histogram,
+		std::vector<int>& cumHistogram) const {
+	this->histogram(histogram);
+	cumHistogram.resize(Pixel::NUM_COLOR);
+	cumHistogram[0] = histogram[0];
+	for (int i = 1; i < Pixel::NUM_COLOR; i++) {
+		cumHistogram[i] = cumHistogram[i - 1] + histogram[i];
+	}
+}
+
+void img::PixMat::histogramEqualization() {
+	std::vector<int> histogram, cumHistogram(Pixel::NUM_COLOR, 0);
+	double alpha = (double) Pixel::COLOR_MAX / (double) size();
+	this->histogram(histogram);
+	double sum = 0;
+	for (int i = 0; i < Pixel::NUM_COLOR; i++) {
+		sum += CLAMP(alpha * histogram[i], Pixel::COLOR_MIN, Pixel::COLOR_MAX);
+		cumHistogram[i] = round(sum);
+	}
+	for (std::size_t i = 1; i < size(); i++) {
+		guint8 color = operator[](i).luminance();
+		operator[](i).setColor(cumHistogram[color]);
+	}
 }

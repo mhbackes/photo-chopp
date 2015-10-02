@@ -27,8 +27,8 @@ public:
 	int rowstride() const;
 	guint size() const;
 
-	Pixel operator[](int n);
-	Pixel at(int x, int y);
+	Pixel operator[](int n) const;
+	Pixel at(int x, int y) const;
 	guint8* row_ptr(int y);
 
 	void linearTransformation(double a, double b);
@@ -36,7 +36,10 @@ public:
 	void horizontalFlip();
 	void verticalFlip();
 	void grayQuantization(int numShades);
-	std::vector<int> grayFrequences();
+	void histogram(std::vector<int>& result) const;
+	void cumulativeHistogram(std::vector<int>& histogram,
+			std::vector<int>& comHistogram) const;
+	void histogramEqualization();
 
 private:
 	int n_channels_, width_, height_, rowstride_;

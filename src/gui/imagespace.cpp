@@ -9,17 +9,16 @@
 
 const guint gui::ImageSpace::BORDER_WIDTH = 5;
 
-gui::ImageSpace::ImageSpace()  {
+gui::ImageSpace::ImageSpace() {
 	set_border_width(BORDER_WIDTH);
 	originalImage_.set_label("Original Image");
 	currentImage_.set_label("Current Image");
-	pack1(originalImage_,false, false);
+	pack1(originalImage_, false, false);
 	pack2(currentImage_, false, false);
 	show_all_children();
 }
 
 gui::ImageSpace::~ImageSpace() {
-	// TODO Auto-generated destructor stub
 }
 
 Gtk::Image& gui::ImageSpace::getOriginalImage() {
@@ -37,11 +36,12 @@ void gui::ImageSpace::loadImage(const std::string fileName) {
 	curImage.set(oriImage.get_pixbuf()->copy());
 }
 
-void gui::ImageSpace::saveImage(const std::string& fileName, const std::string& extension) {
+void gui::ImageSpace::saveImage(const std::string& fileName,
+		const std::string& extension) {
 	currentImage_.getImage().get_pixbuf()->save(fileName, extension);
 }
 
-void graphicUserInterface::ImageSpace::clearImage() {
+void gui::ImageSpace::clearImage() {
 	originalImage_.getImage().clear();
 	currentImage_.getImage().clear();
 }

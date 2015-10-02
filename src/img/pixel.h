@@ -21,11 +21,18 @@ public:
 
 	Pixel& operator=(const Pixel& p);
 
+	guint8 luminance() const;
+
+	void setColor(guint8 color);
 	void linearTransformation(double a, double b);
 	void grayScale();
 	void grayQuantization(int numShades);
 
 	static const int SIZE_BYTES;
+
+	static const int COLOR_MIN;
+	static const int COLOR_MAX;
+	static const int NUM_COLOR;
 
 private:
 	guint8* pixel_;
@@ -33,10 +40,6 @@ private:
 	static const double R_LUMINANCE;
 	static const double G_LUMINANCE;
 	static const double B_LUMINANCE;
-
-	static const int COLOR_MIN;
-	static const int COLOR_MAX;
-	static const int NUM_COLOR;
 
 	static const int R_OFFSET;
 	static const int G_OFFSET;

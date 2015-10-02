@@ -7,7 +7,7 @@
 
 #include "workspace.h"
 
-const guint gui::Workspace::BORDER_WIDTH = 5;
+const guint gui::Workspace::BORDER_WIDTH = 0;
 
 gui::Workspace::Workspace() :
 		imageSpace_(), toolBox_(imageSpace_.getOriginalImage(),
@@ -19,7 +19,6 @@ gui::Workspace::Workspace() :
 }
 
 gui::Workspace::~Workspace() {
-	// TODO Auto-generated destructor stub
 }
 
 gui::ImageSpace& gui::Workspace::getImageSpace() {

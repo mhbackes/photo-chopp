@@ -9,12 +9,10 @@
  */
 
 #include "gui/mainwindow.h"
-#include <gtkmm/main.h>
+#include <gtkmm/application.h>
 
-int main (int argc, char *argv[])
-{
-  Gtk::Main kit(argc, argv);
-  gui::MainWindow mainWindow;
-  Gtk::Main::run(mainWindow);
-  return 0;
+int main(int argc, char *argv[]) {
+	auto app = Gtk::Application::create(argc, argv, "photo.chopp");
+	gui::MainWindow mainWindow;
+	return app->run(mainWindow);
 }

@@ -10,7 +10,6 @@
 
 #include <gtkmm/menu.h>
 #include <gtkmm/menubar.h>
-#include <gtkmm/menuitem.h>
 #include <gtkmm/imagemenuitem.h>
 
 #include "imagespace.h"
